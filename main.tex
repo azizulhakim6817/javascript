@@ -1,0 +1,69 @@
+########### row MongoDB project #####################################
+1. row MongoDB CRUD project
+2. Plugin mongoose 
+3. package ...............................
+    "express": "^4.20.0",
+    "mongodb": "^6.8.1",
+    "nodemon": "^3.1.4"
+    "body-parser",
+
+*** <----req----------------Middleware---------------res-------------------> 
+**** ("/get)  => api endpoint 
+
+4. const { MongoClient } = require("mongodb");
+
+### const { ObjectId } = require("mongodb");
+   => const result = await db.collection("student").findOne({ _id: new ObjectId(id) });
+
+5. const url = "mongodb://localhost:27017";
+   const dbName = "StudentDB";
+
+
+6. Create .....................
+   => postman => body + row + json {"name": "Azizu"}
+
+   //@@@ controller................
+   router.post("/create", async (req, res) => {
+  const db = req.db;
+  const reqBody = req.body;
+
+  try {        
+    //@@@ resource ..........................
+    const result = await db.collection("student").insertOne(reqBody);
+    return res.status(200).json(result);
+  } catch (error) {
+    res.status(500).json(error);
+  }
+});
+
+7. //Data get ...............................................
+   => postname => url + get  => find data show
+
+router.get("/get", async (req, res) => {
+  const db = req.db;
+  try {
+    const result = await db.collection("student").find().toArray();
+    res.status(200).json(result);
+  } catch (error) {
+    res.status(500).json(error);
+  }
+});
+
+8. //Data get/details single Route.......................
+   ==> postname ==> {{BASE}}/get-single/66e0a37b08ec2c978bcbe5ef
+
+router.get("/get-single/:id", async (req, res) => {
+  const db = req.db;
+  const id = req.params.id;
+  try {
+    const result = await db
+      .collection("student")
+      .findOne({ _id: new ObjectId(id) });
+    res.status(200).json(result);
+  } catch (error) {
+    res.status(500).json(error);
+  }
+});
+
+9. 
+
